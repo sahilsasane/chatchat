@@ -1,36 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import useSignUp from '../../hooks/useSignUp';
+import { ToastContainer, toast } from 'react-toastify';
 
 const SignUp = () => {
+    const { Signup, loading } = useSignUp();
+    const [inputs, setInputs] = useState({
+        fullName: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        gender: ''
+    });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(inputs);
+        await Signup(inputs.fullName, inputs.username, inputs.password, inputs.password, inputs.gender);
+    }
     return (
         <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
             <div className='w-full p-6 rounded-lg shadow-md bg-slate-600 bg-clip-padding'>
                 <h1 className='text-3xl font-semibold text-center'>
                     Signup
                 </h1>
-                <form >
+                <form onSubmit={handleSubmit}>
                     <div>
                         <label className='label p-2'>
                             <span className='text-base label-text'>Full Name</span>
                         </label>
-                        <input type="text" className='input input-bordered w-full h-10' placeholder='Full Name' />
+                        <input type="text" className='input input-bordered w-full h-10' placeholder='Full Name'
+                            value={inputs.fullName}
+                            onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
+                            required
+                        />
                     </div>
                     <div>
                         <label className='label p-2'>
                             <span className='text-base label-text'>Username</span>
                         </label>
-                        <input type="text" className='input input-bordered w-full h-10' placeholder='Username' />
+                        <input type="text" className='input input-bordered w-full h-10' placeholder='Username'
+                            value={inputs.username}
+                            onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+                        />
                     </div>
                     <div>
                         <label className='label p-2'>
                             <span className='text-base label-text'>Password</span>
                         </label>
-                        <input type="text" className='input input-bordered w-full h-10' placeholder='Password' />
+                        <input type="password" className='input input-bordered w-full h-10' placeholder='Password'
+                            value={inputs.password}
+                            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+                        />
                     </div>
                     <div>
                         <label className='label p-2'><span className='text-base label-text'>Gender</span></label>
                         <div className='py-1'>
-                            <select name="" id="" className='dropdown p-2 rounded-lg cursor-pointer'>
-                                <option value="" selected disabled>Choose Gender</option>
+                            <select name="" id="" className='dropdown p-2 rounded-lg cursor-pointer'
+                                value={inputs.gender}
+                                onChange={(e) => setInputs({ ...inputs, gender: e.target.value })}
+                            >
+                                <option value="" disabled hidden>Choose Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
@@ -40,7 +69,7 @@ const SignUp = () => {
                         <button className='btn btn-block btn-sm mt-2'>Signup</button>
                     </div>
                 </form>
-                <a href="#" className='text-lg mt-2 hover:text-blue-600  inline-block'>Login</a>
+                <Link to="/login" className='text-lg mt-2 hover:text-blue-600  inline-block'>Login</Link>
             </div>
 
         </div>
