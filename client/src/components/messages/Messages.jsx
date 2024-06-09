@@ -6,8 +6,8 @@ const Messages = () => {
     const { messages, loading } = useGetMessages();
     return (
         <div className='px-4 flex-1 overflow-auto'>
-            {!loading && messages.length > 0 && messages.map((message) => (
-                message && <Message key={message._id} message={message} />
+            {!loading && messages.length > 0 && messages[0].map((message, idx) => (
+                message && <Message key={idx} message={message} />
             ))}
 
             {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}

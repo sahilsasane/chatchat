@@ -42,7 +42,7 @@ const signup = async (req, res) => {
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
-                profilePic: newUser.profilePic,
+                profilePic: newUser.profilePicture,
                 message: "User created successfully",
                 token: token
             });
@@ -71,7 +71,7 @@ const login = async (req, res) => {
             _id: user._id,
             fullName: user.fullName,
             username: user.username,
-            profilePic: user.profilePic,
+            profilePic: user.profilePicture,
             token: token
         });
     } catch (error) {

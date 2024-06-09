@@ -5,7 +5,6 @@ const sendMessages = async (req, res) => {
     try {
         const { message } = req.body;
         const { id: receiverId } = req.params;
-        console.log(req.body, receiverId)
         const senderId = req.user._id;
         let conversation = await Conversation.findOne({
             participants: { $all: [senderId, receiverId] },
@@ -34,7 +33,6 @@ const sendMessages = async (req, res) => {
 
 const getMessages = async (req, res) => {
     try {
-        console.log(req.user._id)
         const { id: usertoChatId } = req.params;
         const senderId = req.user._id;
         const conversation = await Conversation.findOne({

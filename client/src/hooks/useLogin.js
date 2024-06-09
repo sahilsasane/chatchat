@@ -30,6 +30,7 @@ const useLogin = () => {
             if (result.status === 500) {
                 toast.error("Internal Server Error");
             }
+            console.log(result.data)
             localStorage.setItem('user', JSON.stringify(result.data));
             localStorage.setItem('token', result.data.token);
             setUser(result.data);

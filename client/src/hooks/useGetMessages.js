@@ -7,13 +7,11 @@ const useGetMessages = () => {
     const [loading, setLoading] = useState(false);
     const { messages, setMessages, selectedConversation } = useConversations();
     useEffect(() => {
-        const getMessages = async (message) => {
+        const getMessages = async () => {
             setLoading(true);
             try {
-                console.log('hello')
                 const res = await Messages.getMessages({ id: selectedConversation._id })
-                console.log(res.data)
-                setMessages([...messages, res.data.message]);
+                setMessages([res.data]);
             } catch (e) {
                 console.log(e)
                 toast.error("Internal Server Error");
