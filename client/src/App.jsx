@@ -7,7 +7,7 @@ import { AuthProvider, useAuthContext } from './context/AuthContext';
 function App() {
   return (
     <>
-      <div className="p-4 h-screen flex items-center justify-center bg-gray-950">
+      <div className="p-4 h-screen flex items-center justify-center bg-gray-900">
         <AuthProvider>
           <Router />
           <ToastContainer

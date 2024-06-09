@@ -35,7 +35,7 @@ const signup = async (req, res) => {
         });
 
         if (newUser) {
-            generateToken(newUser._id, res);
+            let token = generateToken(newUser._id, res);
             await newUser.save();
 
             res.status(201).json({
@@ -43,7 +43,8 @@ const signup = async (req, res) => {
                 fullName: newUser.fullName,
                 username: newUser.username,
                 profilePic: newUser.profilePic,
-                message: "User created successfully"
+                message: "User created successfully",
+                token: token
             });
         } else {
             res.status(400).json({ message: "Invalid user data" });
@@ -64,13 +65,14 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid username or password" });
         }
 
-        generateToken(user._id, res);
+        let token = generateToken(user._id, res);
 
         res.status(200).json({
             _id: user._id,
             fullName: user.fullName,
             username: user.username,
             profilePic: user.profilePic,
+            token: token
         });
     } catch (error) {
         console.log("Error in login controller", error.message);

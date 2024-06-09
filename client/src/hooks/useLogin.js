@@ -31,6 +31,7 @@ const useLogin = () => {
                 toast.error("Internal Server Error");
             }
             localStorage.setItem('user', JSON.stringify(result.data));
+            localStorage.setItem('token', result.data.token);
             setUser(result.data);
         } catch (e) {
             toast.error("Internal Server Error");
