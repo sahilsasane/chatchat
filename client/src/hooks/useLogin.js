@@ -24,7 +24,7 @@ const useLogin = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
-            const data = result.json();
+            const data = await result.json();
             if (result.status === 200) {
                 toast.success("Logged in successfully");
                 localStorage.setItem('user', JSON.stringify(data));
