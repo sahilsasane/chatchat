@@ -27,17 +27,14 @@ const useLogin = () => {
             const data = result.json();
             if (result.status === 200) {
                 toast.success("Logged in successfully");
-                navigate('/');
+                localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('token', data.token);
+                setUser(result.data);
             }
-            else if (result.status === 400) {
-                toast.error("Invalid user data");
-            }
-            else if (result.status === 500) {
+            else {
                 toast.error("Internal Server Error");
             }
-            localStorage.setItem('user', JSON.stringify(data));
-            localStorage.setItem('token', data.token);
-            setUser(result.data);
+            navigate("/");
         } catch (e) {
             toast.error("Internal Server Error");
             console.log(e);
