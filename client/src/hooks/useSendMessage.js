@@ -2,6 +2,7 @@ import { useState } from "react";
 import useConversations from "../store/useConversations";
 import Messages from "../services/Messages";
 import { toast } from "react-toastify";
+import useListenMessages from "./useListenMessages";
 
 const useSendMessage = () => {
     const [loading, setLoading] = useState(false);
@@ -10,9 +11,16 @@ const useSendMessage = () => {
         setLoading(true);
         try {
             console.log('hello')
-            const res = await Messages.sendMessages({ id: selectedConversation._id, message: message })
-            console.log(res.data)
-            setMessages([...messages, res.data.message]);
+            const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ message }),
+            });
+            const data = await res.json();
+            setMessages([...messages, data]);
         } catch (e) {
             console.log(e)
             toast.error("Internal Server Error");

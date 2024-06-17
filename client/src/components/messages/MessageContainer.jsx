@@ -3,9 +3,11 @@ import useConversations from "../../store/useConversations";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import NoChatSelected from "./NoChatSelected";
+import { useAuthContext } from "../../context/AuthContext";
 
 const MessageContainer = () => {
     const { selectedConversation, setSelectedConversation } = useConversations();
+    const { user } = useAuthContext();
 
     useEffect(() => {
         return () => setSelectedConversation(null);
@@ -13,7 +15,7 @@ const MessageContainer = () => {
     return (
         <>
             {!selectedConversation ? (
-                <NoChatSelected />
+                <NoChatSelected name={user.fullName} />
             ) : (
                 <div className='md:min-w-[450px] flex flex-col'>
                     {/* Header */}

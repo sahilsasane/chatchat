@@ -4,6 +4,7 @@ const generateToken = require("../utils/generateToken");
 
 const signup = async (req, res) => {
     try {
+        console.log(req.body);
         const { fullName, username, password, confirmPassword, gender } = req.body;
         if (password !== confirmPassword) {
             return res.status(400).json({ message: "Passwords don't match" });
@@ -37,7 +38,6 @@ const signup = async (req, res) => {
         if (newUser) {
             let token = generateToken(newUser._id, res);
             await newUser.save();
-
             res.status(201).json({
                 _id: newUser._id,
                 fullName: newUser.fullName,
@@ -59,14 +59,15 @@ const login = async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
-        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
-
-        if (!user || !isPasswordCorrect) {
+        if (!user) {
             return res.status(400).json({ message: "Invalid username or password" });
         }
-
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        console.log('helloeoeo')
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Invalid username or password" });
+        }
         let token = generateToken(user._id, res);
-
         res.status(200).json({
             _id: user._id,
             fullName: user.fullName,

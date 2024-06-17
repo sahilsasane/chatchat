@@ -8,15 +8,21 @@ const useGetConversations = () => {
 
     useEffect(() => {
         const getConversations = async () => {
+            let token = localStorage.getItem('token')
             setLoading(true);
             try {
-                let result = await Users.getUsers();
-                if (result.status === 200) {
-                    setConversations(result.data);
+                let result = await fetch("/api/users", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+                const data = await result.json();
+                if (data.error) {
+                    throw new Error(data.error);
                 }
-                if (result.status === 500) {
-                    toast.error("Internal Server Error");
-                }
+                setConversations(data);
             } catch (e) {
                 toast.error("Internal Server Error");
                 console.log(e);

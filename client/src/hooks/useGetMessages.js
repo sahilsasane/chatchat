@@ -10,8 +10,16 @@ const useGetMessages = () => {
         const getMessages = async () => {
             setLoading(true);
             try {
-                const res = await Messages.getMessages({ id: selectedConversation._id })
-                setMessages([res.data]);
+                let token = localStorage.getItem('token');
+                const res = await fetch(`/api/messages/${selectedConversation._id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                setMessages(data);
             } catch (e) {
                 console.log(e)
                 toast.error("Internal Server Error");

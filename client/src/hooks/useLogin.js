@@ -24,10 +24,10 @@ const useLogin = () => {
                 toast.success("Logged in successfully");
                 navigate('/');
             }
-            if (result.status === 400) {
+            else if (result.status === 400) {
                 toast.error("Invalid user data");
             }
-            if (result.status === 500) {
+            else if (result.status === 500) {
                 toast.error("Internal Server Error");
             }
             console.log(result.data)

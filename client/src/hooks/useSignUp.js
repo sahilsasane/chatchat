@@ -21,8 +21,11 @@ const useSignUp = () => {
                 "confirmPassword": password,
                 "gender": gender
             }
-
-            let result = await Auth.signup(body);
+            const result = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
             if (result.status === 201) {
                 toast.success("User created successfully");
                 navigate('/login');
@@ -34,6 +37,7 @@ const useSignUp = () => {
                 toast.error("Internal Server Error");
             }
             localStorage.setItem('user', JSON.stringify(result.data));
+            localStorage.setItem('token', result.data.token);
             setUser(result.data);
         } catch (e) {
             toast.error("Internal Server Error")

@@ -2,6 +2,7 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Router from "./router/Router"
 import { AuthProvider, useAuthContext } from './context/AuthContext';
+import { SocketProvider } from './context/SocketContext';
 
 
 function App() {
@@ -9,20 +10,22 @@ function App() {
     <>
       <div className="p-4 h-screen flex items-center justify-center bg-gray-900">
         <AuthProvider>
-          <Router />
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Bounce}
-          />
+          <SocketProvider>
+            <Router />
+            <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Bounce}
+            />
+          </SocketProvider>
         </AuthProvider>
       </div>
     </>
