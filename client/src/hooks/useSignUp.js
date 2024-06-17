@@ -22,12 +22,17 @@ const useSignUp = () => {
                 "gender": gender
             }
 
-            let result = await Auth.signup(body);
+            const result = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            const data = await result.json();
             if (result.status === 201) {
                 toast.success("User created successfully");
-                localStorage.setItem('user', JSON.stringify(result.data));
-                localStorage.setItem('token', result.data.token);
-                setUser(result.data);
+                localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('token', data.token);
+                setUser(data);
                 navigate('/login');
             }
             if (result.status === 400) {

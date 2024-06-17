@@ -19,9 +19,17 @@ const useLogin = () => {
                 "password": password,
             }
 
-            let result = await Auth.login(body);
+            const result = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            const data = result.json();
             if (result.status === 200) {
                 toast.success("Logged in successfully");
+                localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('token', data.token);
+                setUser(result.data);
                 navigate('/');
             }
             else if (result.status === 400) {
@@ -30,10 +38,7 @@ const useLogin = () => {
             else if (result.status === 500) {
                 toast.error("Internal Server Error");
             }
-            console.log(result.data)
-            localStorage.setItem('user', JSON.stringify(result.data));
-            localStorage.setItem('token', result.data.token);
-            setUser(result.data);
+
         } catch (e) {
             toast.error("Internal Server Error");
             console.log(e);

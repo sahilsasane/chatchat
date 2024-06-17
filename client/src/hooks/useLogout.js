@@ -8,7 +8,10 @@ const useLogout = () => {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await Auth.logout();
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
       if (res.status === 200) {
         localStorage.removeItem('user');
         setUser(null);
