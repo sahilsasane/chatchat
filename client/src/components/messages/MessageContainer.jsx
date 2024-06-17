@@ -17,10 +17,13 @@ const MessageContainer = () => {
             {!selectedConversation ? (
                 <NoChatSelected name={user.fullName} />
             ) : (
-                <div className='md:min-w-[450px] flex flex-col'>
+                <div className='w-full flex flex-col bg-gray-800'>
                     {/* Header */}
-                    <div className='bg-slate-500 px-4 py-2 mb-2'>
-                        <span className='label-text'></span> <span className='text-gray-900 font-bold'>{selectedConversation.fullName}</span>
+                    <div className='flex items-center bg-slate-500 px-4 py-2 mb-2'>
+                        <img alt="profile photo" src={selectedConversation.profilePicture} className="w-10 rounded-full"></img>
+                        <div className='font-bold  text-xl mx-2 text-black'>
+                            {selectedConversation.fullName}
+                        </div>
                     </div>
 
                     <Messages />

@@ -8,7 +8,6 @@ const Messages = () => {
     const { messages, loading } = useGetMessages();
     useListenMessages();
     const lastMessageRef = useRef();
-    console.log("stupid ass", messages)
     useEffect(() => {
         setTimeout(() => {
             lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
