@@ -29,7 +29,7 @@ const useLogin = () => {
                 toast.success("Logged in successfully");
                 localStorage.setItem('user', JSON.stringify(data));
                 localStorage.setItem('token', data.token);
-                setUser(result.data);
+                setUser(data);
             }
             else {
                 toast.error("Internal Server Error");
