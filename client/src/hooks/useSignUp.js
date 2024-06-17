@@ -25,6 +25,9 @@ const useSignUp = () => {
             let result = await Auth.signup(body);
             if (result.status === 201) {
                 toast.success("User created successfully");
+                localStorage.setItem('user', JSON.stringify(result.data));
+                localStorage.setItem('token', result.data.token);
+                setUser(result.data);
                 navigate('/login');
             }
             if (result.status === 400) {
@@ -33,8 +36,7 @@ const useSignUp = () => {
             if (result.status === 500) {
                 toast.error("Internal Server Error");
             }
-            localStorage.setItem('user', JSON.stringify(result.data));
-            setUser(result.data);
+
         } catch (e) {
             toast.error("Internal Server Error")
             console.log(e);
