@@ -2,7 +2,7 @@ import React from 'react'
 import { TiMessages } from "react-icons/ti";
 const NoChatSelected = ({ name }) => {
     return (
-        <div className='flex items-center justify-center w-full bg-gray-800 h-full'>
+        <div className='flex items-center justify-center bg-gray-800 h-full xs:hidden md:block'>
             <div className='px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2'>
                 <p>Hello {name}!</p>
                 <p>Select a chat to start messaging</p>
@@ -11,4 +11,4 @@ const NoChatSelected = ({ name }) => {
         </div>
     );
 };
-export default NoChatSelected;
+export default NoChatSelected; 

@@ -18,12 +18,12 @@ const SignUp = () => {
         await Signup(inputs.fullName, inputs.username, inputs.password, inputs.password, inputs.gender);
     }
     return (
-        <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-            <div className='w-full p-6 rounded-lg shadow-md bg-slate-600 bg-clip-padding'>
+        <div className='flex flex-col h-screen items-center justify-center min-w-96 mx-auto xs:p-4'>
+            <div className='w-full xs:py-20 p-6 rounded-lg shadow-md bg-slate-600 bg-clip-padding'>
                 <h1 className='text-3xl font-semibold text-center'>
                     Signup
                 </h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='space-y-2'>
                     <div>
                         <label className='label p-2'>
                             <span className='text-base label-text'>Full Name</span>
@@ -66,10 +66,12 @@ const SignUp = () => {
                         </div>
                     </div>
                     <div>
-                        <button className='btn btn-block btn-sm mt-2'>Signup</button>
+                        <button className='btn btn-block btn-sm mt-4'>Signup</button>
                     </div>
                 </form>
-                <Link to="/login" className='text-lg mt-2 hover:text-blue-600  inline-block'>Login</Link>
+                <div className='mt-3'>
+                    <Link to="/login" className='text-lg text-blue-500 hover:text-blue-600'>Login</Link>
+                </div>
             </div>
 
         </div>

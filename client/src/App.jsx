@@ -8,7 +8,7 @@ import { SocketProvider } from './context/SocketContext';
 function App() {
   return (
     <>
-      <div className="h-screen p-10 flex items-center justify-center bg-black">
+      <div>
         <AuthProvider>
           <SocketProvider>
             <Router />
