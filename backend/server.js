@@ -9,14 +9,15 @@ const connectToDb = require('./db/connectToDb')
 const { app, server } = require('./socket/socket')
 const path = require('path')
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: './.env' });
 
 const PORT = process.env.PORT
 const projectRoot = path.resolve();
 
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:5173",
+    //http://localhost:5173
+    origin: "https://chatchat-m052.onrender.com",
     credentials: true,
 }));
 app.use(cookieParser());
