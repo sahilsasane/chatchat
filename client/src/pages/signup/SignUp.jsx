@@ -18,7 +18,7 @@ const SignUp = () => {
         await Signup(inputs.fullName, inputs.username, inputs.password, inputs.password, inputs.gender);
     }
     return (
-        <div className='flex flex-col h-screen items-center justify-center min-w-96 mx-auto xs:p-4'>
+        <div className='flex flex-col h-screen items-center justify-center mx-auto md:w-[35rem] xs:p-4'>
             <div className='w-full xs:py-20 p-6 rounded-lg shadow-md bg-slate-600 bg-clip-padding'>
                 <h1 className='text-3xl font-semibold text-center'>
                     Signup

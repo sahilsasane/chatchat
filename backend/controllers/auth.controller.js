@@ -46,8 +46,6 @@ const signup = async (req, res) => {
                 message: "User created successfully",
                 token: token
             });
-        } else {
-            res.status(400).json({ message: "Invalid user data" });
         }
     } catch (error) {
         console.log("Error in signup controller", error.message);

@@ -31,7 +31,10 @@ const useLogin = () => {
                 localStorage.setItem('token', data.token);
                 setUser(data);
             }
-            else {
+            else if (result.status === 400) {
+                toast.error("Invalid username or password");
+            }
+            else if (result.status === 500) {
                 toast.error("Internal Server Error");
             }
             navigate("/");
