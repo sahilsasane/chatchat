@@ -13,7 +13,7 @@ const MessageContainer = () => {
         return () => setSelectedConversation(null);
     }, [setSelectedConversation])
     return (
-        <div className={`w-3/4 md:block ${selectedConversation ? 'xs:w-full' : 'xs:hidden'}`}>
+        <div className={`md:w-3/4 md:block ${selectedConversation ? 'xs:w-full' : 'xs:hidden'}`}>
             {!selectedConversation ? (
                 <NoChatSelected name={user.fullName} />
             ) : (

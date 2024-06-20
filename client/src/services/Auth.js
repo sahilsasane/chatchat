@@ -1,36 +1,46 @@
 import axios from 'axios';
 let envVars = import.meta.env;
-let auth_add = 'http://localhost:5000/api/auth'
+
+const api = axios.create({
+    baseURL: '/api/auth',
+});
 class Auth {
-
-    login(body) {
+    async login(body) {
         try {
-            return axios.post(
-                `${auth_add}/login`,
-                body
-            )
+            return await api.post('/login', body);
         } catch (e) {
-            throw e;
+            if (e.response) {
+                return e.response;
+            } else {
+                console.log(e)
+                throw e;
+            }
         }
     }
 
-    signup(body) {
+    async signup(body) {
         try {
-            return axios.post(
-                `${auth_add}/signup`,
-                body
-            )
+            return await api.post('/signup', body);
         } catch (e) {
-            throw e;
+            if (e.response) {
+                return e.response;
+            } else {
+                console.log(e)
+                throw e;
+            }
         }
     }
-    logout() {
+
+    async logout() {
         try {
-            return axios.post(
-                `${auth_add}/logout`
-            )
+            return await api.post('/logout');
         } catch (e) {
-            throw e;
+            if (e.response) {
+                return e.response;
+            } else {
+                console.log(e)
+                throw e;
+            }
         }
     }
 }

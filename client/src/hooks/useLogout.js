@@ -14,6 +14,7 @@ const useLogout = () => {
       });
       if (res.status === 200) {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         setUser(null);
         toast.success("Logged out successfully");
       }

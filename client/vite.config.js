@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         // http://localhost:5000
-        target: "https://chatchat-m052.onrender.com",
+        target: "http://localhost:5000",
       },
     },
   },
