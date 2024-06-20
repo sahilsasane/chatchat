@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const authRoutes = require('./routes/auth.routes')
 const messageRoutes = require('./routes/message.routes')
 const userRoutes = require('./routes/user.routes')
+const groupRoutes = require('./routes/group.routes')
 const connectToDb = require('./db/connectToDb')
 const { app, server } = require('./socket/socket')
 const path = require('path')
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/groups", groupRoutes)
 
 app.use(express.static(path.join(projectRoot, '/client/dist')))
 

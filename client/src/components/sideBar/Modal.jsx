@@ -3,12 +3,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import Contacts from './Contacts';
 import useGetConversations from '../../hooks/useGetConversations';
 import { toast } from 'react-toastify';
+import useCreateGroup from '../../hooks/useCreateGroup';
+import { useAuthContext } from '../../context/AuthContext';
 
 const Modal = ({ showModal, handleCloseModal }) => {
     const [selectedPeople, setSelectedPeople] = useState([]);
     const { conversations, loading } = useGetConversations();
     const [groupName, setGroupName] = useState('');
     const [isNext, setIsNext] = useState(false);
+    const [icon, setIcon] = useState("icon");
+    const { createGroup } = useCreateGroup();
+    const { user } = useAuthContext();
     const handleSelect = (id, isSelected) => {
         if (isSelected) {
             setSelectedPeople(prev => [...prev, conversations.find(p => p._id === id)]);
@@ -26,6 +31,12 @@ const Modal = ({ showModal, handleCloseModal }) => {
         }
         console.log(selectedPeople);
         setIsNext(true);
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(groupName);
+        console.log("members", selectedPeople);
+        await createGroup(groupName, user, selectedPeople, icon);
     }
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto"  >
@@ -50,7 +61,7 @@ const Modal = ({ showModal, handleCloseModal }) => {
                         <>
                             <div className='w-full flex justify-between'>
                                 <h2 className='px-2 mx-2 m-2'>All Contacts</h2>
-                                <button className='m-1 px-4 py-2 bg-slate-700 rounded-2xl hover:bg-slate-600'
+                                <button className='m-1 px-4 py-2 bg-slate-700 text-gray-300 rounded-2xl hover:bg-slate-600'
                                     onClick={handleNext}
                                 >
                                     Next</button>
@@ -60,14 +71,19 @@ const Modal = ({ showModal, handleCloseModal }) => {
                     }
                     {isNext &&
                         <div>
-                            <div className='flex flex-col p-2 m-2'>
-                                <label className='text-gray-300'>Group Name</label>
-                                <input type="text" className='p-2 mt-2 rounded-xl text-gray-400' placeholder='Group Group' />
-                            </div>
-                            <div className='flex flex-col p-2 m-2'>
-                                <label className='text-gray-300'>Group Icon</label>
-                                <input type="file" className='my-2 rounded-lg border border-gray-500 cursor-pointer' />
-                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className='flex flex-col p-2 m-2'>
+                                    <label className='text-gray-300'>Group Name</label>
+                                    <input type="text" className='p-2 mt-2 rounded-xl text-gray-400' placeholder='Group Group' onChange={(e) => setGroupName(e.target.value)} />
+                                </div>
+                                <div className='flex flex-col p-2 m-2'>
+                                    <label className='text-gray-300'>Group Icon</label>
+                                    <input type="file" className='my-2 rounded-lg border border-gray-500 cursor-pointer' />
+                                </div>
+                                <div className='flex justify-center'>
+                                    <button type="submit" className='p-2 mx-2 mt-0 mb-4 px-10 rounded-xl bg-slate-600 text-gray-200 hover:bg-slate-500'>Create</button>
+                                </div>
+                            </form>
                         </div>
                     }
                 </div>

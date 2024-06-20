@@ -19,10 +19,12 @@ const useGetConversations = () => {
                     }
                 });
                 const data = await result.json();
+                console.log(data)
+                const users = data.users;
                 if (data.error) {
                     throw new Error(data.error);
                 }
-                setConversations(data);
+                setConversations(users);
             } catch (e) {
                 toast.error("Internal Server Error");
                 console.log(e);
