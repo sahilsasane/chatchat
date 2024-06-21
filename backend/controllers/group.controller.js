@@ -4,7 +4,6 @@ const { getReceiverSocketId, io } = require('../socket/socket');
 
 const createGroup = async (req, res) => {
     try {
-        console.log('hello');
         const { name, owner, members, icon } = req.body;
         if (name.length < 3) {
             return res.status(400).json({ message: "Group name must be at least 3 characters" });
@@ -69,11 +68,11 @@ const sendMessage = async (req, res) => {
             group.messages.push(newMessage._id);
         }
         await Promise.all([group.save(), newMessage.save()]);
-        //socket here
-        const receiverSocketId = getReceiverSocketId(groupId);
-        if (receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", newMessage);
-        }
+        const populatedMessage = await newMessage.populate({
+            path: 'senderId',
+            select: 'username fullName profilePicture'
+        })
+        io.to(groupId).emit("newMessage", populatedMessage);
         res.status(200).json(newMessage);
 
     } catch (e) {

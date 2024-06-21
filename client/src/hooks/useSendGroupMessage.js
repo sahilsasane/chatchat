@@ -17,6 +17,7 @@ const useSendGroupMessage = () => {
                 },
                 body: JSON.stringify({ message }),
             });
+
             const data = await res.json();
             setMessages([...messages, data]);
         } catch (e) {

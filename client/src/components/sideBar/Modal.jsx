@@ -34,9 +34,9 @@ const Modal = ({ showModal, handleCloseModal }) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(groupName);
         console.log("members", selectedPeople);
         await createGroup(groupName, user, selectedPeople, icon);
+        handleCloseModal();
     }
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto"  >
