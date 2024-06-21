@@ -6,20 +6,35 @@ import { toast } from "react-toastify";
 const useGetMessages = () => {
     const [loading, setLoading] = useState(false);
     const { messages, setMessages, selectedConversation } = useConversations();
+    let groupName = selectedConversation?.name;
     useEffect(() => {
         const getMessages = async () => {
             setLoading(true);
             try {
                 let token = localStorage.getItem('token');
-                const res = await fetch(`/api/messages/${selectedConversation._id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const data = await res.json();
-                setMessages(data);
+                if (!groupName) {
+                    const res = await fetch(`/api/messages/${selectedConversation._id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const data = await res.json();
+                    // console.log(data)
+                    setMessages(data);
+                } else {
+                    const res = await fetch(`/api/groups/${selectedConversation._id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const data = await res.json();
+                    console.log(data)
+                    setMessages(data);
+                }
             } catch (e) {
                 console.log(e)
                 toast.error("Internal Server Error");

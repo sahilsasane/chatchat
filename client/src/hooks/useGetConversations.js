@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 const useGetConversations = () => {
     const [loading, setLoading] = useState(false);
     const [conversations, setConversations] = useState([]);
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -19,12 +20,12 @@ const useGetConversations = () => {
                     }
                 });
                 const data = await result.json();
-                console.log(data)
                 const users = data.users;
                 if (data.error) {
                     throw new Error(data.error);
                 }
-                setConversations(users);
+                setConversations(users)
+                setGroups(data.group)
             } catch (e) {
                 toast.error("Internal Server Error");
                 console.log(e);
@@ -34,7 +35,7 @@ const useGetConversations = () => {
         getConversations();
     }, [])
 
-    return { conversations, loading };
+    return { conversations, groups, loading };
 }
 
 export default useGetConversations

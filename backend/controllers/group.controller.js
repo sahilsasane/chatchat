@@ -1,5 +1,5 @@
 const Group = require('../models/group.model');
-
+const Message = require('../models/message.model');
 
 const createGroup = async (req, res) => {
     try {
@@ -28,4 +28,49 @@ const createGroup = async (req, res) => {
     }
 }
 
-module.exports = { createGroup };
+const getGroupMessages = async (req, res) => {
+    try {
+        const { id: groupId } = req.params;
+        const group = await Group.findById(groupId);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+        let messages = await group.populate("messages");
+        // console.log(messages);
+        res.status(200).json(messages.messages);
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Server Error" });
+    }
+}
+
+const sendMessage = async (req, res) => {
+    try {
+        const { message } = req.body;
+        const { id: groupId } = req.params;
+        const senderId = req.user._id;
+        let group = await Group.findById(groupId);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+        const newMessage = new Message({
+            senderId,
+            receiverId: groupId,
+            message,
+        });
+        if (newMessage) {
+            group.messages.push(newMessage._id);
+        }
+        await Promise.all([group.save(), newMessage.save()]);
+        //socket here
+
+        res.status(200).json(newMessage);
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Server Error" });
+    }
+}
+
+module.exports = { createGroup, getGroupMessages, sendMessage };

@@ -18,13 +18,13 @@ const groupSchema = new mongoose.Schema(
             }],
             default: []
         },
-        messages: {
-            type: [{
+        messages: [
+            {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Message"
-            }],
-            default: [],
-        },
+                ref: "Message",
+                default: [],
+            }
+        ],
         profilePicture: {
             type: String,
             default: "",

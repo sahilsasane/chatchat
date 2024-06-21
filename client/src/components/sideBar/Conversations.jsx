@@ -2,7 +2,8 @@ import useGetConversations from "../../hooks/useGetConversations";
 import Conversation from "./Conversation";
 
 const Conversations = () => {
-    const { conversations, loading } = useGetConversations();
+    const { conversations, groups, loading } = useGetConversations();
+    let grps = groups;
     return (
         <div className='py-2 flex flex-col'>
             {conversations &&
@@ -11,6 +12,15 @@ const Conversations = () => {
                         key={index}
                         conversation={conversation}
                         lastidx={index === conversations.length - 1}
+                    />
+                ))}
+            {grps &&
+                grps.map((group, index) => (
+                    <Conversation
+                        key={index}
+                        conversation={group}
+                        lastidx={index === grps.length - 1}
+                        isGroup={true}
                     />
                 ))}
             {loading ? <span className="loading loading-spinner"></span> : null}

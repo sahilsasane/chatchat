@@ -1,9 +1,8 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversations from "../../store/useConversations";
 
-const Conversation = ({ conversation, lastidx }) => {
+const Conversation = ({ conversation, lastidx, isGroup }) => {
     const { selectedConversation, setSelectedConversation } = useConversations()
-
     const isSelected = selectedConversation?._id === conversation._id;
     const { onlineUsers } = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
@@ -23,7 +22,7 @@ const Conversation = ({ conversation, lastidx }) => {
 
                 <div className='flex flex-col flex-1'>
                     <div className='flex gap-3 justify-between'>
-                        <p className='font-bold text-gray-200'>{conversation.fullName}</p>
+                        <p className='font-bold text-gray-200'>{isGroup ? conversation.name : conversation.fullName}</p>
                     </div>
                 </div>
             </div>
