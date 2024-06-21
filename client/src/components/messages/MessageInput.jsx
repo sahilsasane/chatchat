@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
+import useSendGroupMessage from "../../hooks/useSendGroupMessage";
 
-const MessageInput = () => {
+const MessageInput = ({ isGroup }) => {
     const [message, setMessage] = useState('');
     const { sendMessage, loading } = useSendMessage();
+    const { sendGroupMessage } = useSendGroupMessage();
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!message) return;
-        await sendMessage(message);
+        if (isGroup) {
+            await sendGroupMessage(message);
+        } else {
+            await sendMessage(message);
+        }
         setMessage('');
     }
     return (

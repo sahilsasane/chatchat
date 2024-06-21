@@ -1,5 +1,6 @@
 const Group = require('../models/group.model');
 const Message = require('../models/message.model');
+const { getReceiverSocketId, io } = require('../socket/socket');
 
 const createGroup = async (req, res) => {
     try {
@@ -31,13 +32,18 @@ const createGroup = async (req, res) => {
 const getGroupMessages = async (req, res) => {
     try {
         const { id: groupId } = req.params;
-        const group = await Group.findById(groupId);
+        const group = await Group.findById(groupId).populate({
+            path: 'messages',
+            populate: {
+                path: 'senderId',
+                select: 'username fullName profilePicture' // Select the fields you need
+            }
+        });
         if (!group) {
             return res.status(404).json({ message: "Group not found" });
         }
-        let messages = await group.populate("messages");
         // console.log(messages);
-        res.status(200).json(messages.messages);
+        res.status(200).json(group.messages);
 
     } catch (e) {
         console.log(e);
@@ -64,7 +70,10 @@ const sendMessage = async (req, res) => {
         }
         await Promise.all([group.save(), newMessage.save()]);
         //socket here
-
+        const receiverSocketId = getReceiverSocketId(groupId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
         res.status(200).json(newMessage);
 
     } catch (e) {

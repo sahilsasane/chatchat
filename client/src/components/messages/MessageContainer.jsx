@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const MessageContainer = () => {
     const { selectedConversation, setSelectedConversation } = useConversations();
     const { user } = useAuthContext();
-    let groupName = selectedConversation?.name;
+    const groupName = selectedConversation?.name;
     useEffect(() => {
         return () => setSelectedConversation(null);
     }, [setSelectedConversation])
@@ -31,8 +31,8 @@ const MessageContainer = () => {
                         </div>
                     </div>
 
-                    <Messages />
-                    <MessageInput />
+                    <Messages isGroup={groupName} />
+                    <MessageInput isGroup={groupName} />
                 </div>
             )}
         </div>

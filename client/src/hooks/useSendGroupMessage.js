@@ -3,13 +3,13 @@ import useConversations from "../store/useConversations";
 import Messages from "../services/Messages";
 import { toast } from "react-toastify";
 
-const useSendMessage = () => {
+const useSendGroupMessage = () => {
     const [loading, setLoading] = useState(false);
     const { messages, setMessages, selectedConversation } = useConversations();
-    const sendMessage = async (message) => {
+    const sendGroupMessage = async (message) => {
         setLoading(true);
         try {
-            const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
+            const res = await fetch(`/api/groups/send/${selectedConversation._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const useSendMessage = () => {
             setLoading(false);
         }
     }
-    return { sendMessage, loading }
+    return { sendGroupMessage, loading }
 }
 
-export default useSendMessage
+export default useSendGroupMessage;

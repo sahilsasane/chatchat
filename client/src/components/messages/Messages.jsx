@@ -1,13 +1,16 @@
 import { useRef, useEffect } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
+import useGetGroupMessages from "../../hooks/useGetGroupMessage";
 import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessages";
+import GroupMessage from "./GroupMessage";
 
-const Messages = () => {
-    const { messages, loading } = useGetMessages();
+const Messages = ({ isGroup }) => {
+    const { messages, loading } = isGroup ? useGetGroupMessages() : useGetMessages();
     useListenMessages();
     const lastMessageRef = useRef();
+    // console.log(messages)
     useEffect(() => {
         setTimeout(() => {
             lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -15,9 +18,14 @@ const Messages = () => {
     }, [messages])
     return (
         <div className='px-4 flex-1 overflow-auto'>
-            {!loading && messages.length > 0 && messages.map((message, idx) => (
+            {!loading && !isGroup && messages.length > 0 && messages.map((message, idx) => (
                 <div key={message._id} ref={idx === messages.length - 1 ? lastMessageRef : null}>
                     <Message message={message} />
+                </div>
+            ))}
+            {!loading && isGroup && messages.length > 0 && messages.map((message, idx) => (
+                <div key={message._id} ref={idx === messages.length - 1 ? lastMessageRef : null}>
+                    <GroupMessage message={message} />
                 </div>
             ))}
 

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import useConversations from "../store/useConversations";
-import Messages from "../services/Messages";
 import { toast } from "react-toastify";
 
-const useGetMessages = () => {
+const useGetGroupMessages = () => {
     const [loading, setLoading] = useState(false);
     const { messages, setMessages, selectedConversation } = useConversations();
     useEffect(() => {
@@ -11,7 +10,7 @@ const useGetMessages = () => {
             setLoading(true);
             try {
                 let token = localStorage.getItem('token');
-                const res = await fetch(`/api/messages/${selectedConversation._id}`, {
+                const res = await fetch(`/api/groups/${selectedConversation._id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -34,4 +33,4 @@ const useGetMessages = () => {
     return { messages, loading }
 }
 
-export default useGetMessages
+export default useGetGroupMessages;
